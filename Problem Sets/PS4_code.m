@@ -23,13 +23,13 @@ inertial_terms = (I_1 + J_m*N^2);
 num = [0, 0, (N*k_t)/(R_a*inertial_terms)]; % numerator Open loop
 den = [1, (N^2*(b + k_t^2/R_a)) / inertial_terms, gravity_torque/inertial_terms]; % Denominator open loop
 
-G = tf(num, den); % transfer function
+% G = tf(num, den); % transfer function
 omega_n = sqrt(den(3));
 zeta = den(2) / (2*omega_n);
-P = pole(G);
-tau = 1 / -P(2);
-G_steady_state = num(3)/ den(3);
-0.63*G_steady_state;
+% P = pole(G);
+% tau = 1 / -P(2);
+% G_steady_state = num(3)/ den(3);
+% 0.63*G_steady_state;
 
 %% Problem 2.2
 disp("")
@@ -37,25 +37,25 @@ disp("Problem 2b")
 disp("")
 num = [0, 0, N*k_t/inertial_terms];
 den = [1, N^2*b/inertial_terms, gravity_torque/inertial_terms];
-H = tf(num, den);
-omega_n = sqrt(den(3));
-zeta = den(2) / (2*omega_n);
+% H = tf(num, den);
+% omega_n = sqrt(den(3));
+% zeta = den(2) / (2*omega_n);
 % rlocus(H); %works, just commented to avoid seeing it
-stepinfo(H);
+% stepinfo(H);
+% 
+% ts = 4 / (zeta*omega_n);
+% tp = pi / (omega_n*sqrt(1-zeta^2));
+% os = exp(-pi*zeta/(sqrt(1-zeta^2)));
 
-ts = 4 / (zeta*omega_n);
-tp = pi / (omega_n*sqrt(1-zeta^2));
-os = exp(-pi*zeta/(sqrt(1-zeta^2)));
-
-H_steady_state = num(3) / den(3);
+% H_steady_state = num(3) / den(3);
 % step(H); %works, just commented to avoid seeing it + speed up script
 %% Problem 3.1
 disp("")
 disp("Problem 3.1")
 disp("")
-G_p = H
+% G_p = H
 
-P = pole(G_p)
+% P = pole(G_p)
 
 num = [0, 0, N*k_t/inertial_terms];
 den = [1, N^2*b/inertial_terms, gravity_torque/inertial_terms];
@@ -89,18 +89,27 @@ phi = theta1 + theta2 - 180
 
 kp_over_kd = img_des/tand(phi) + real_des
 
-l3 = sqrt(tp(2)^2 + (kp_over_kd-20)^2)
-%%
+l3 = sqrt(img_des^2 + (kp_over_kd-real_des)^2)
 
 kd = (l1*l2 / l3)/134.2 
 kp = kd* kp_over_kd
-G_c = tf([kp, kd], [1])
 
-T_s = feedback(G_p*G_c, 1)
-P = pole(T_s)
-Z = zero(T_s)
-t = -1:0.01:3;
-h = stepplot(T_s,'r',t);
+%% 3.2
+% We need a new l3
+l3 = sqrt(real_des^2 + img_des^2)
+theta1
+theta2
+theta3 = atan2d(27.278, -20)
+theta_remaining = theta3 - theta1 - theta2
+phi = (-180 + theta_remaining)/2
+%% Extra work i Don't need
+% G_c = tf([kp, kd], [1])
+
+% T_s = feedback(G_p*G_c, 1)
+% P = pole(T_s)
+% Z = zero(T_s)
+% t = -1:0.01:3;
+% h = stepplot(T_s,'r',t);
 
 
 
