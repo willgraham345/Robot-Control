@@ -97,26 +97,84 @@ kp = kd* kp_over_kd
 %% 3.2
 % We need a new l3
 l3 = sqrt(real_des^2 + img_des^2)
-theta1
-theta2
 theta3 = atan2d(27.278, -20)
-theta_remaining = theta3 - theta1 - theta2
-phi = (-180 + theta_remaining)/2
-%% Extra work i Don't need
-% G_c = tf([kp, kd], [1])
+theta_remaining = -180 + theta1 + theta2 + theta3
+phi = theta_remaining/2
+z = img_des/tand(phi) + 20
+Kd_PID = ( (l1*l2*l3) / (2*sqrt((z-real_des)^2 + img_des^2)) ) / 134.2
 
-% T_s = feedback(G_p*G_c, 1)
-% P = pole(T_s)
-% Z = zero(T_s)
-% t = -1:0.01:3;
-% h = stepplot(T_s,'r',t);
+Kp_PID = 2*z * Kd_PID
+Ki_PID = z^2*Kd_PID
 
+%% 3.3
+out = sim("PS4_sim.slx", 5);
+fig1 = figure(1)
+fig1 = out.PD_controller.plot()
+xlabel("Time (sec)")
+ylabel("Theta (rad)")
+title("3.3 PD Controller Step Response")
+S = stepinfo(out.PD_controller.Data, out.tout, 1)
+% Unpack S for values
+values = [S.Overshoot, S.SettlingTime, (1-out.PD_controller.Data(end))]
+str = sprintf("Overshoot: %f%%\nSettling time: %f\nSteady State Error: %f%%", values) 
+text(2.5, .6, str)
 
+fig2 = figure(2)
+fig2 = out.PID_controller.plot()
+xlabel("Time (sec)")
+ylabel("Theta (rad)")
+title("3.3 PID Controller Step Response")
+S = stepinfo(out.PID_controller.Data, out.tout, 1)
+% Unpack S for values
+values = [S.Overshoot, S.SettlingTime, (1-out.PID_controller.Data(end))]
+str = sprintf("Overshoot: %f%%\nSettling time: %f\nSteady State Error: %f%%", values) 
+text(2.5, .6, str)
 
+%% 3.4
+out = sim("PS4_sim2.slx", 5);
+fig3 = figure(3)
+fig3 = out.PV_controller.plot()
+xlabel("Time (sec)")
+ylabel("Theta (rad)")
+title("3.4 PV Controller Step Response")
+S = stepinfo(out.PV_controller.Data, out.tout, 1)
+% Unpack S for values
+values = [S.Overshoot, S.SettlingTime, (1-out.PV_controller.Data(end))]
+str = sprintf("Overshoot: %f%%\nSettling time: %f\nSteady State Error: %f%%", values) 
+text(2.5, .6, str)
 
+fig4 = figure(4)
+fig4 = out.PIV_controller.plot()
+xlabel("Time (sec)")
+ylabel("Theta (rad)")
+title("3.4 PIV Controller Step Response")
+S = stepinfo(out.PIV_controller.Data, out.tout, 1)
+% Unpack S for values
+values = [S.Overshoot, S.SettlingTime, (1-out.PIV_controller.Data(end))]
+str = sprintf("Overshoot: %f%%\nSettling time: %f\nSteady State Error: %f%%", values) 
+text(2.5, .6, str)
+%% 3.5
+disturbance_amplitude = .3
 
+out = sim("PS4_sim3.slx", 5);
+fig5 = figure(5)
+fig5 = out.PV_controller.plot()
+xlabel("Time (sec)")
+ylabel("Theta (rad)")
+title("3.5 PV Controller Step Response")
+S = stepinfo(out.PV_controller.Data, out.tout, 1)
+% Unpack S for values
+values = [S.Overshoot, S.SettlingTime, (1-out.PV_controller.Data(end))]
+str = sprintf("Overshoot: %f%%\nSettling time: %f\nSteady State Error: %f%%", values) 
+text(2.5, .6, str)
 
-
-
-
-
+fig6 = figure(6)
+fig6 = out.PIV_controller.plot()
+xlabel("Time (sec)")
+ylabel("Theta (rad)")
+title("3.5 PIV Controller Step Response")
+S = stepinfo(out.PIV_controller.Data, out.tout, 1)
+% Unpack S for values
+values = [S.Overshoot, S.SettlingTime, (1-out.PIV_controller.Data(end))]
+str = sprintf("Overshoot: %f%%\nSettling time: %f\nSteady State Error: %f%%", values) 
+text(2.5, .6, str)
