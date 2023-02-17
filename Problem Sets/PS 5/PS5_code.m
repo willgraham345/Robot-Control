@@ -16,3 +16,5 @@ clear; close all; clc; format compact
 Problem = sprintf("1.3")
 Kd = 0.2699;
 Kp = 8.4049;
+
+%% 2.1
