@@ -18,10 +18,14 @@ Kd = 0.2699;
 Kp = 8.4049;
 
 %% 2.1
+clear; close all; clc;  format compact;
 OS_des = .1;
 ts_des = .2;
-zeta = -log(OS_des) / (sqrt(pi^2 +(log(OS_des))^2))
+zeta = -log(OS_des) / (sqrt(pi^2 +(log(OS_des))^2));
 
-omegaN_des = 4 / (zeta*ts_des)
+omegaN = 4 / (zeta*ts_des);
 
-omegaD_des = omegaN_des*sqrt(1-zeta^2)
+omegaD = omegaN*sqrt(1-zeta^2);
+
+Kp = omegaN^2
+Kd = 2*zeta*omegaN
