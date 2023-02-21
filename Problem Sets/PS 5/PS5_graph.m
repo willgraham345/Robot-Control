@@ -31,5 +31,5 @@ title(str)
 xlabel("X [m]")
 ylabel("Y [m]")
 legend("X Error", "Y Error", 'Location','Northeast')
-dim = [0.42, 0.3, 0.1, 0.1];
+dim = [0.65, 0.2, 0.1, 0.1];
 t = annotation('textbox', dim, 'String', error_str, 'FitBoxToText','on', 'BackgroundColor', "w", "FontSize", 7)

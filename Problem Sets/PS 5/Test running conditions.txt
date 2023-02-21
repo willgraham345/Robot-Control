@@ -1,0 +1,5 @@
+Frequency 0.2:
+Time = 5.5
+
+Frequency 1:
+Time = 1.5
