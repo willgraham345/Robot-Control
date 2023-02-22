@@ -23,9 +23,15 @@ OS_des = .1;
 ts_des = .2;
 zeta = -log(OS_des) / (sqrt(pi^2 +(log(OS_des))^2));
 
-omegaN = 4 / (zeta*ts_des);
+omegaN = 4 / (zeta*ts_des)
 
-omegaD = omegaN*sqrt(1-zeta^2);
+omegaD = omegaN*sqrt(1-zeta^2)
 
 Kp = omegaN^2
 Kd = 2*zeta*omegaN
+
+% Satisfying the angle conditon
+theta1 = atan2d(omegaD, -zeta*omegaN)
+theta2 = -180 + 2*theta1
+
+x = omegaD / (tand(theta2)) + zeta*omegaN
