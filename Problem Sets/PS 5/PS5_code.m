@@ -3,7 +3,7 @@
 clear; close all; clc; format compact
 sprintf("1.1")
 % Load PD Control values from last homework
-Kd = 0.2699;
+Kd = 0.27;
 Kp = 8.4049;
 %% 1.2 Controller
 clear; close all; clc; format compact
