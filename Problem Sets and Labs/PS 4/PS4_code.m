@@ -92,7 +92,7 @@ kp_over_kd = img_des/tand(phi) + real_des
 l3 = sqrt(img_des^2 + (kp_over_kd-real_des)^2)
 
 kd = (l1*l2 / l3)/134.2 
-kp = kd* kp_over_kd
+K = kd* kp_over_kd
 
 %% 3.2
 % We need a new l3

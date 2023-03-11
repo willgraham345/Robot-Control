@@ -1,0 +1,9 @@
+LAb 1 data description
+
+Q2
+thetap1 = open loop response at K = 1
+thetap75 = open loop response at K = 0.75
+thetap2 = oepn loop response at K = 2
+
+Q4 
+Experimnetal gains were Kp = 8.5 Kv = .3
