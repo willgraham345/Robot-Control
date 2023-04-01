@@ -6,7 +6,7 @@ figure(1)
 plot(xy(:,1) , xy(:,2), 'b')
 grid on
 grid minor
-hold on 
+hold on
 plot(xy_d(:,1) , xy_d(:,2), '--r')
 ylabel("Y [m]")
 xlabel("X [m]")
