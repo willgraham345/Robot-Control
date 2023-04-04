@@ -10,7 +10,7 @@ hold on
 plot(xy_d(:,1) , xy_d(:,2), '--r')
 ylabel("Y [m]")
 xlabel("X [m]")
-title({"PD Feedforward Robustness Comparison", "End Effector Trajectory", "f = 1 circles/second"});
+title({"Adaptive Control, Weighted", "End Effector Trajectory", "f = 1 circles/second"});
 legend("Actual", "Desired")
 axis([0 0.25 0 0.2])
 
@@ -44,7 +44,7 @@ hold on
 plot(errors.time , Jointerror2, '--r')
 ylabel("Error [deg]")
 xlabel("Time [s]")
-title({"PD Feedforward Robustness Comparison", "Joint Errors vs Time", "f = 1 circles/second"})
+title({"Adaptive Control, Weighted", "Joint Errors vs Time", "f = 1 circles/second"})
 legend("Joint 1", "Joint 2")
 dim = [0.65, 0.15, 0.1, 0.1];
 t = annotation('textbox', dim, 'String', error_str, 'FitBoxToText','on', 'BackgroundColor', "w", "FontSize", 8)
