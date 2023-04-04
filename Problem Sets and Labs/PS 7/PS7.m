@@ -11,10 +11,13 @@ a2=0.15;
 x = a1*cos(theta1) + a2*cos(theta1+theta2);
 y = a1*sin(theta1) + a2*sin(theta1+theta2);
 
-X_vec = [x; y];
+manipulator_jacobian = [x; y];
+
+x_dot = -a1*sin(theta1)*theta1_dot - a2*sin(theta1 + theta2)*(theta1_dot + theta2_dot);
+y_dot = a2*cos(theta1)*theat1_dot + a2*cos(theta1 + theta2)*(theta1_dot + theta2_dot);
 
 J = jacobian(X_vec, [theta1; theta2])
-
+J_dot = 
 
 J_dot = diff(J, t)
 
