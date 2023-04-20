@@ -1,4 +1,3 @@
-%Zachary Orton Plotting Script
 close all
 %Plot actual end effector trajectory 
 figure(1)
@@ -11,7 +10,7 @@ hold on
 plot(xy_d(:,1) , xy_d(:,2), '--r')
 ylabel("Y [m]")
 xlabel("X [m]")
-title("End Effector Trajectory")
+title({"Stiffness/Damping Control", "End Effector Trajectory"});
 legend("Actual", "Desired")
 axis equal
 %axis([0.12 0.28 -0.105 0.055])
@@ -48,25 +47,37 @@ axis equal
 % text(0.09, -MaxError(1)*.95, sprintf("Speed: %.1f", speed(1)))
 % text(1, -MaxError(1)*.75 , sprintf("RMS Error = [%.3f°,%.3f°]", RMSE(1), RMSE(2)))
 % text(1, -MaxError(1)*.85, sprintf("Max Error = [%.3f°,%.3f°]", MaxError(1), MaxError(2)))
-%%
-x = F.signals.values(:,1);
-y = F.signals.values(:,2);
-maxy = max(abs(y));
 
+%%
+
+% Get Forces
+f = F.signals.values;
+t = F.time;
+fx = f(:,1);
+fy = f(:,2);
+
+
+%
 figure(2)
-%plot joint errors vs time 
-plot(F.time , x, 'b')
+plot(t, fx, 'b')
 grid on
 grid minor
 hold on 
-plot(F.time , y, 'r')
+plot(t, fy, '--r');
 ylabel("Force [N]")
 xlabel("Time [s]")
-title("Force vs Time")
-legend("X Force", "Y Force")
+title({"Stiffness/Damping Control", "Force vs Time"});
+legend("X", "Y")
+RMSF1 = sqrt(mean((fx).^2))
+RMSF2 = sqrt(mean((fy).^2)) 
+% RMSE = [RMSE1 , RMSE2];
+MaxForce1 = max(abs(fx));
+MaxForce2 = max(abs(fy));
+force_str = sprintf("                   X       Y \nMax Force: %.3f, %.3f \nRMS Force: %.3f %.3f", [MaxForce1, MaxForce2, RMSF1, RMSF2])
+dim = [0.65, 0.15, 0.1, 0.1];
 
-%Add the circle speed to the plot
-text(1,-.5, sprintf("Max Force in Y: %.1f", maxy))
+t = annotation('textbox', dim, 'String', force_str, 'FitBoxToText','on', 'BackgroundColor', "w", "FontSize", 8)
+
 %%
 %OpS Error
 Opserror1 = Opserror.signals.values(:,1);
@@ -86,11 +97,15 @@ grid on
 grid minor
 hold on 
 plot(Opserror.time, Opserror2, '--r')
-ylabel("Op-Space Error [Deg]")
 xlabel("Time [s]")
 title("Op-Space Errors vs Time")
 legend("OpS Error 1", "Ops Error 2")
 
-% text(0.09, MaxOpsError(1)*.95, sprintf("Speed: %.1f", speed(1)))
-text(1, MaxOpsError(1)*.85 , sprintf("RMS Error = [%.3f,%.3f]", ORMSE(1), ORMSE(2)))
-text(1, MaxOpsError(1)*.75, sprintf("Max Error = [%.3f,%.3f]", MaxOpsError(1), MaxOpsError(2)))
+ylabel("Error [m]")
+xlabel("Time [s]")
+title({"Stiffness/Damping Control", "XY Errors vs Time"})
+legend("X", "Y")
+error_str = sprintf("                   X       Y \nMax Error: %.3f, %.3f \nRMS Error: %.3f %.3f", [MaxOpsError1, MaxOpsError2, ORMSE1, ORMSE2])
+dim = [0.65, 0.15, 0.1, 0.1];
+t = annotation('textbox', dim, 'String', error_str, 'FitBoxToText','on', 'BackgroundColor', "w", "FontSize", 8)
+
